@@ -27,3 +27,25 @@ RDS -> MariaDB
 3. Model, View, Controller(MVC패턴 이용)
 4. Putty를 이용하여 EC2 접근 및  jar 형식 Building
 
+
+---
+### 3 Tier Architecture 확장
+![image](https://user-images.githubusercontent.com/61929745/106992575-1ba14b00-67bc-11eb-82cd-0dece1c54c1d.png)
+
+- 아키텍쳐
+1. 가용 영역의 구분 -> 장애로부터 격리
+2. Public, Private Subnet의 구분으로 보안 강화
+3. Load Balancing을 통해 서버 부하 분산
+4. 3 Tier 설계로 각 계층의 부하 분산 및 서버 장애 안정성 
+
+- 보안 그룹, Type, Port, Source(Inbound)
+1. B-SG / SSH / 22 / 0.0.0.0/0
+2. EX-ELB-SG / HTTP / 80 / 0.0.0.0/0
+3-1. WEB-SG / HTTP / 80 / EX-ELB-SG
+3-2. WEB-SG / SSH / 22 / 0.0.0.0/0
+4. IN-ELB-SG / HTTP / 8080 / WEB-SG
+5-1. WAS-SG / HTTP / 8080 / IN-ELB-SG
+5-2. WAS-SG / SSH / 22 / 0.0.0.0/0
+6. DB-SG / HHTP / 3306 / WAS-SG
+
+
